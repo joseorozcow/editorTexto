@@ -9,21 +9,37 @@ const App = ({ placeholder }: { placeholder?: string }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const config = useMemo(
     () => ({
-      readonly: false, // all options from https://xdsoft.net/jodit/docs/,
-      placeholder: placeholder || "escribe claro",
+      readonly: false,
+      placeholder: placeholder || "Escribe aquí...",
     }),
     [placeholder]
   );
 
+  const handleDownload = () => {
+    const element = document.createElement("a");
+    const file = new Blob([content], { type: "text/html" });
+    element.href = URL.createObjectURL(file);
+    element.download = "contenido.html";
+    document.body.appendChild(element);
+    element.click();
+  };
+
   return (
-    <JoditEditor
-      ref={editor}
-      value={content}
-      config={config}
-      onBlur={(newContent) => setContent(newContent)} // preferred to use only this option to update the content for performance reasons
-      onChange={() => {}}
-      className="jodit-editor"
-    />
+    <div>
+      <JoditEditor
+        ref={editor}
+        value={content}
+        config={config}
+        onBlur={(newContent) => setContent(newContent)}
+        onChange={() => {}}
+        className="jodit-editor"
+      />
+      <div>
+        <h2>Código HTML generado:</h2>
+        <pre>{content}</pre>
+        <button onClick={handleDownload}>Descargar HTML</button>
+      </div>
+    </div>
   );
 };
 
