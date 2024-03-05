@@ -5,11 +5,6 @@
   text-align: center;
 }
 
-/* En tu archivo CSS global o componente */
-.jodit-editor {
-  color: black; /* Establece el color del texto en negro */
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
